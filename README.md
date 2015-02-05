@@ -1,5 +1,5 @@
 # StackManager
-
+![alt tag](https://raw.githubusercontent.com/mariohahn/StackManager/master/StackManager/Images/StackManager.gif)
 ##Usage
 
 ```objective-c
