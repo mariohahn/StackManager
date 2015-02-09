@@ -1,6 +1,5 @@
 //
 //  StackManager.m
-//  VideoOnDemand
 //
 //  Created by MarioHahn on 04/02/15.
 //  Copyright (c) 2015 Mario Hahn. All rights reserved.
@@ -10,7 +9,6 @@
 #import "Masonry.h"
 
 @implementation StackManagerTapGestureRecognizer
-
 @end
 
 @interface StackManager()
@@ -99,11 +97,15 @@
     [self.containerView addSubview:viewControllerToPresent.view];
     [self.viewController addChildViewController:viewControllerToPresent];
     [viewControllerToPresent didMoveToParentViewController:self.viewController];
-
+    
     [viewControllerToPresent.view mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(size);
         make.center.mas_equalTo(self.containerView);
     }];
+    
+    if ([self.delegate respondsToSelector:@selector(stackManager:didAddViewController:)]) {
+        [self.delegate stackManager:self didAddViewController:viewControllerToPresent];
+    }
     
     [UIView animateWithDuration:0.4 delay:self.viewControllers.count ==1 ? 0: 0.2 options:0 animations:^{
         viewControllerToPresent.view.alpha = 1;
@@ -124,6 +126,10 @@
 
 -(void)removeViewController:(UIViewController*)viewController adjustOtherViewControllers:(BOOL)adjust removeShodow:(BOOL)removeShadow animationDuration:(CGFloat)duration{
     
+    if ([self.delegate respondsToSelector:@selector(stackManager:willRemoveViewController:)]) {
+        [self.delegate stackManager:self willRemoveViewController:viewController];
+    }
+    
     [viewController willMoveToParentViewController:nil];
     
     [UIView animateWithDuration:duration animations:^{
@@ -135,6 +141,10 @@
         [viewController removeFromParentViewController];
         if (removeShadow) {[self.containerView removeFromSuperview];}
         [self.viewControllers removeObject:viewController];
+        
+        if ([self.delegate respondsToSelector:@selector(stackManager:didRemoveViewController:)]) {
+            [self.delegate stackManager:self didRemoveViewController:viewController];
+        }
         
         if (adjust) {
             UIView *gestureView = [self.viewControllers.lastObject view];
