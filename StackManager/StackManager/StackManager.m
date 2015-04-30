@@ -8,10 +8,15 @@
 #import "StackManager.h"
 #import "Masonry.h"
 
-@implementation StackManagerTapGestureRecognizer
+@interface StackManagerTapGestureRecognizer()
 @end
 
-@interface StackManager()
+
+@implementation StackManagerTapGestureRecognizer
+
+@end
+
+@interface StackManager()<UIGestureRecognizerDelegate>
 @property (nonatomic,strong) UIViewController *viewController;
 @property (nonatomic,strong) UIView *containerView;
 @property (nonatomic,strong) UIView *shadowView;
@@ -61,6 +66,7 @@
 
 -(void)addGestureToLastViewController{
     UIViewController *lastViewController = self.viewControllers.lastObject;
+    if (!lastViewController) {return;}
     
     BOOL hasGesture = NO;
     for (UIGestureRecognizer *gesture in lastViewController.view.gestureRecognizers) {
@@ -70,10 +76,12 @@
         }
     }
     if (!hasGesture) {
-        [lastViewController.view addGestureRecognizer:[StackManagerTapGestureRecognizer.alloc initWithTarget:self action:@selector(dismissLast)]];
+        StackManagerTapGestureRecognizer *stackTap = [StackManagerTapGestureRecognizer.alloc initWithTarget:self action:@selector(dismissLast)];
+        stackTap.delegate = self;
+        stackTap.cancelsTouchesInView = YES;
+        [lastViewController.view addGestureRecognizer:stackTap];
     }
 }
-
 
 -(void)presentViewController:(UIViewController*)viewControllerToPresent withSize:(CGSize)size{
     
@@ -85,14 +93,12 @@
     }
     [self addGestureToLastViewController];
     
-    
-    [self setTransFormForViewControllerpositiv:NO];
-    
     viewControllerToPresent.view.alpha = 0;
     viewControllerToPresent.view.userInteractionEnabled = YES;
-    
+    [self addMotionEffectToView:viewControllerToPresent.view];
     
     [self.viewControllers addObject:viewControllerToPresent];
+    
     [self.viewController willMoveToParentViewController:viewControllerToPresent];
     [self.containerView addSubview:viewControllerToPresent.view];
     [self.viewController addChildViewController:viewControllerToPresent];
@@ -102,6 +108,10 @@
         make.size.mas_equalTo(size);
         make.center.mas_equalTo(self.containerView);
     }];
+    
+    if (self.viewControllers.count > 1) {
+        [self setTransFormForViewControllers];
+    }
     
     if ([self.delegate respondsToSelector:@selector(stackManager:didAddViewController:)]) {
         [self.delegate stackManager:self didAddViewController:viewControllerToPresent];
@@ -122,6 +132,13 @@
         [self removeViewController:viewController adjustOtherViewControllers:NO removeShodow:YES animationDuration:0.4];
     }
     self.viewControllers = NSMutableArray.new;
+}
+
+-(void)dismissViewController:(UIViewController*)viewControllerToDismiss{
+    [self removeViewController:viewControllerToDismiss
+    adjustOtherViewControllers:YES
+                  removeShodow:self.viewControllers.count > 1 ? YES :NO
+             animationDuration:0.2];
 }
 
 -(void)removeViewController:(UIViewController*)viewController adjustOtherViewControllers:(BOOL)adjust removeShodow:(BOOL)removeShadow animationDuration:(CGFloat)duration{
@@ -153,19 +170,41 @@
                     [gestureView removeGestureRecognizer:gesture];
                 }
             }
-            [self setTransFormForViewControllerpositiv:YES];
+            [self setTransFormForViewControllers];
         }
     }];
 }
 
--(void)setTransFormForViewControllerpositiv:(BOOL)positiv{
+-(void)addMotionEffectToView:(UIView*)view{
+    
+    UIInterpolatingMotionEffect *motionX = [UIInterpolatingMotionEffect.alloc initWithKeyPath:@"center.x" type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+    motionX.minimumRelativeValue = @(-30);
+    motionX.maximumRelativeValue = @(30);
+    
+    UIInterpolatingMotionEffect *motionY = [UIInterpolatingMotionEffect.alloc initWithKeyPath:@"center.y" type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+    motionY.minimumRelativeValue = @(-30);
+    motionY.maximumRelativeValue = @(30);
+    
+    UIMotionEffectGroup *motions = UIMotionEffectGroup.new;
+    motions.motionEffects = @[motionX,motionY];
+    
+    [view addMotionEffect:motions];
+}
+
+-(void)setTransFormForViewControllers{
     for (UIViewController *viewController in self.viewControllers) {
         
-        CGFloat width = CGRectGetWidth(viewController.view.bounds) + self.paddingBetweenViewControllers;
-        [UIView animateWithDuration:0.2 animations:^{
-            viewController.view.transform = CGAffineTransformTranslate(viewController.view.transform, positiv ? width : -width , 0);
+        NSInteger multiplier = [self.viewControllers indexOfObject:viewController]-self.viewControllers.count+1;
+        CGFloat offset = (CGRectGetWidth(viewController.view.bounds) + self.paddingBetweenViewControllers)*multiplier;
+        
+        [viewController.view mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.centerX.mas_equalTo(self.containerView).with.offset(offset);
         }];
     }
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        [self.containerView layoutIfNeeded];
+    }];
 }
 
 @end

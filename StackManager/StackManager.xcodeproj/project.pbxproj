@@ -150,8 +150,8 @@
 		F5D19DA71A83AF15007747BB /* StackManager */ = {
 			isa = PBXGroup;
 			children = (
-				F5D19DA41A83AF12007747BB /* StackManager.m */,
 				F5D19DA51A83AF12007747BB /* StackManager.h */,
+				F5D19DA41A83AF12007747BB /* StackManager.m */,
 			);
 			name = StackManager;
 			sourceTree = "<group>";
