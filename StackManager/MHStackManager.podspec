@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.platform     =  :ios
   s.source = {
     :git => 'https://github.com/mariohahn/StackManager.git',
-    :tag => 'v1.6.7'
+    :tag => 'v1.0.0'
   }
 
   s.dependency "Masonry"
