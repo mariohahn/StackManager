@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
 
   s.dependency "Masonry"
 
-  s.source_files = ['StackManager/StackManager/**/*.{h,m}']
+  s.source_files = ['StackManager/StackManager/StackManager/**/*.{h,m}']
   s.ios.deployment_target = '7.0'
   s.requires_arc = true
 end

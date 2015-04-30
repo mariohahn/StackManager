@@ -5,6 +5,6 @@ DEPENDENCIES:
   - Masonry
 
 SPEC CHECKSUMS:
-  Masonry: 2cb49fd14d203d2db5ca6bb017135b235dde9980
+  Masonry: 4972309f2f134de9dd312f4dc4a21359b50e6caa
 
 COCOAPODS: 0.34.4
