@@ -15,7 +15,7 @@
 		F5D19D8C1A83AF0A007747BB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5D19D8B1A83AF0A007747BB /* Images.xcassets */; };
 		F5D19D8F1A83AF0A007747BB /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F5D19D8D1A83AF0A007747BB /* LaunchScreen.xib */; };
 		F5D19D9B1A83AF0A007747BB /* StackManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D19D9A1A83AF0A007747BB /* StackManagerTests.m */; };
-		F5D19DA61A83AF12007747BB /* StackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F5D19DA41A83AF12007747BB /* StackManager.m */; };
+		F5E5F2621AF231840064BECB /* StackManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F5E5F2611AF231840064BECB /* StackManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,8 +45,8 @@
 		F5D19D941A83AF0A007747BB /* StackManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StackManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F5D19D991A83AF0A007747BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F5D19D9A1A83AF0A007747BB /* StackManagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StackManagerTests.m; sourceTree = "<group>"; };
-		F5D19DA41A83AF12007747BB /* StackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StackManager.m; sourceTree = "<group>"; };
-		F5D19DA51A83AF12007747BB /* StackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StackManager.h; sourceTree = "<group>"; };
+		F5E5F2601AF231840064BECB /* StackManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StackManager.h; path = StackManager/StackManager.h; sourceTree = "<group>"; };
+		F5E5F2611AF231840064BECB /* StackManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StackManager.m; path = StackManager/StackManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,8 +150,8 @@
 		F5D19DA71A83AF15007747BB /* StackManager */ = {
 			isa = PBXGroup;
 			children = (
-				F5D19DA51A83AF12007747BB /* StackManager.h */,
-				F5D19DA41A83AF12007747BB /* StackManager.m */,
+				F5E5F2601AF231840064BECB /* StackManager.h */,
+				F5E5F2611AF231840064BECB /* StackManager.m */,
 			);
 			name = StackManager;
 			sourceTree = "<group>";
@@ -293,7 +293,7 @@
 			files = (
 				F5D19D871A83AF0A007747BB /* ViewController.m in Sources */,
 				F5D19D841A83AF0A007747BB /* AppDelegate.m in Sources */,
-				F5D19DA61A83AF12007747BB /* StackManager.m in Sources */,
+				F5E5F2621AF231840064BECB /* StackManager.m in Sources */,
 				F5D19D811A83AF0A007747BB /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
