@@ -101,9 +101,7 @@
     
     [self.viewController willMoveToParentViewController:viewControllerToPresent];
     [self.containerView addSubview:viewControllerToPresent.view];
-    if (UIDevice.currentDevice.systemVersion.floatValue >= 9.0) {
-        [self.viewController addChildViewController:viewControllerToPresent];
-    }
+    [self.viewController addChildViewController:viewControllerToPresent];
     [viewControllerToPresent didMoveToParentViewController:self.viewController];
     
     [viewControllerToPresent.view mas_makeConstraints:^(MASConstraintMaker *make) {
