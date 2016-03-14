@@ -35,5 +35,5 @@
 -(void)presentViewController:(UIViewController*)viewControllerToPresent withSize:(CGSize)size;
 
 -(void)dismissViewController:(UIViewController*)viewControllerToDismiss;
-
+-(void)dismissLast;
 @end
